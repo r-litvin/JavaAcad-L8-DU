@@ -2,7 +2,7 @@ package com.engeto.homeworkL8.controller;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
-import com.engeto.homeworkL8.response.FileReader;
+import com.engeto.homeworkL8.response.DataSource;
 
 @RestController()
 public class MainController {
@@ -11,11 +11,11 @@ public class MainController {
     private String historic="";
 
     public MainController(){
-        FileReader scifiReader = new FileReader();
+        DataSource scifiReader = new DataSource();
         scifi = scifiReader.getFileContents("scifi.txt");
-        FileReader romanticReader = new FileReader();
+        DataSource romanticReader = new DataSource();
         romantic = romanticReader.getFileContents("romantic.txt");
-        FileReader historicReader = new FileReader();
+        DataSource historicReader = new DataSource();
         historic = historicReader.getFileContents("historic.txt");
     }
 

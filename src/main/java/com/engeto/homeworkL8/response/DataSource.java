@@ -2,19 +2,19 @@ package com.engeto.homeworkL8.response;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
 
-public class FileReader {
+public class DataSource {
     private String fileContents="";
-    public void read(String fileName){
-        try (BufferedReader reader = new BufferedReader(new java.io.FileReader(fileName))) {
+    private void read(String fileName){
+        try (BufferedReader reader = new BufferedReader(new FileReader(fileName))) {
             StringBuilder content = new StringBuilder();
             String line;
             while ((line = reader.readLine())!=null){
                 content.append(line).append("\n");
             }
             fileContents = content.toString();
-
 
         } catch (FileNotFoundException exc){
             System.err.println("File "+fileName+" not found. "+exc.getLocalizedMessage());
