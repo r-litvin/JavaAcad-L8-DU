@@ -2,14 +2,12 @@ package com.engeto.homeworkL8.response;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
-import java.util.Scanner;
 
-public class fileReader {
-    private static String fileContents="";
-    public static void read(String fileName){
-        try (BufferedReader reader = new BufferedReader(new FileReader(fileName))) {
+public class FileReader {
+    private String fileContents="";
+    public void read(String fileName){
+        try (BufferedReader reader = new BufferedReader(new java.io.FileReader(fileName))) {
             StringBuilder content = new StringBuilder();
             String line;
             while ((line = reader.readLine())!=null){
@@ -25,7 +23,7 @@ public class fileReader {
         }
     }
 
-    public static String getFileContents(String fileName) {
+    public String getFileContents(String fileName) {
         if (fileContents.isEmpty()){
             read(fileName);
         }
