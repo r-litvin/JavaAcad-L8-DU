@@ -7,7 +7,7 @@ import java.io.IOException;
 
 public class DataSource {
     private String fileContents="";
-    private void read(String fileName){
+    private void read(String fileName) throws MyApiException{
         try (BufferedReader reader = new BufferedReader(new FileReader(fileName))) {
             StringBuilder content = new StringBuilder();
             String line;
@@ -17,15 +17,21 @@ public class DataSource {
             fileContents = content.toString();
 
         } catch (FileNotFoundException exc){
-            System.err.println("File "+fileName+" not found. "+exc.getLocalizedMessage());
+            throw new MyApiException("File "+fileName+" not found.");
         } catch (IOException exc){
-            System.err.println("Error reading file "+fileName+ " "+exc.getLocalizedMessage());
+            throw new MyApiException("Error reading file "+fileName+ ".");
         }
     }
 
-    public String getFileContents(String fileName) {
+    public String getFileContents(String fileName){
         if (fileContents.isEmpty()){
-            read(fileName);
+            try {
+                read(fileName);
+            } catch (MyApiException exc){
+                System.err.println("Error obtaining data from "
+                        +fileName+"! "+exc.getLocalizedMessage());
+            }
+
         }
         return fileContents;
     }

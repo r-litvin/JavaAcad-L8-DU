@@ -1,37 +1,32 @@
 package com.engeto.homeworkL8.controller;
 
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 import com.engeto.homeworkL8.response.DataSource;
 
+import java.util.HashMap;
+
 @RestController()
 public class MainController {
-    private String scifi="";
-    private String romantic="";
-    private String historic="";
 
-    public MainController(){
-        DataSource scifiReader = new DataSource();
-        scifi = scifiReader.getFileContents("scifi.txt");
-        DataSource romanticReader = new DataSource();
-        romantic = romanticReader.getFileContents("romantic.txt");
-        DataSource historicReader = new DataSource();
-        historic = historicReader.getFileContents("historic.txt");
+    private HashMap<String, String> data = new HashMap<>();
+
+    @GetMapping("{content}")
+    public String provideContent(@PathVariable String content){
+        String sourceFile = content + ".txt";
+        if(data.containsKey(content)){
+            return data.get(content);
+        } else {
+            DataSource dataReader = new DataSource();
+            String textInformation;
+            textInformation = dataReader.getFileContents(sourceFile);
+            if (!textInformation.isEmpty()){
+                data.put(content, textInformation);
+                return data.get(content);
+            } else {
+                return "Information on "+content+" not available.";
+            }
+        }
     }
-
-    @GetMapping("scifi")
-    public String scifi(){
-        return scifi;
-    }
-
-    @GetMapping("romantic")
-    public String romantic(){
-        return romantic;
-    }
-
-    @GetMapping("historic")
-    public String historic(){
-        return historic;
-    }
-
 }
